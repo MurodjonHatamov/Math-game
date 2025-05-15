@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Asosiy sahifa -->
+        <div id="home-screen" class="screen active">
+            <h1 class="title">Math Game</h1>
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Ismingizni kiriting" required>
+                <span class="focus-border"></span>
+            </div>
+            <div class="buttons">
+                <button id="start-btn" class="btn"><i class="fas fa-play"></i> Start</button>
+                <button id="history-btn" class="btn"><i class="fas fa-history"></i> Tarix</button>
+                <button id="settings-btn" class="btn"><i class="fas fa-cog"></i> Sozlamalar</button>
+            </div>
+        </div>
+
+        <!-- Sozlamalar sahifasi -->
+        <div id="settings-screen" class="screen">
+            <h2>Sozlamalar</h2>
+            <div class="settings-options">
+                <div class="setting">
+                    <label for="sound-toggle">Ovoz:</label>
+                    <label class="switch">
+                        <input type="checkbox" id="sound-toggle" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div class="setting">
+                    <label for="music-toggle">Musiqa:</label>
+                    <label class="switch">
+                        <input type="checkbox" id="music-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div class="setting">
+                    <label for="theme-select">Mavzu:</label>
+                    <select id="theme-select">
+                        <option value="default">Standart</option>
+                        <option value="dark">Qorong'i</option>
+                        <option value="light">Yorqin</option>
+                        <option value="ocean">Okean</option>
+                    </select>
+                </div>
+            </div>
+            <button id="back-btn" class="btn"><i class="fas fa-arrow-left"></i> Orqaga</button>
+        </div>
+
+        <!-- Tarix sahifasi -->
+        <div id="history-screen" class="screen">
+            <h2>Tarix</h2>
+            <div id="history-list" class="history-list">
+                <!-- Tarix yozuvlari bu yerda ko'rsatiladi -->
+            </div>
+            <button id="history-back-btn" class="btn"><i class="fas fa-arrow-left"></i> Orqaga</button>
+        </div>
+
+        <!-- O'yin turini tanlash sahifasi -->
+        <div id="game-mode-screen" class="screen">
+            <h2>O'yin turini tanlang</h2>
+            <div class="game-modes">
+                <div class="game-mode" data-type="addition">
+                    <i class="fas fa-plus"></i>
+                    <span>Qo'shish</span>
+                </div>
+                <div class="game-mode" data-type="subtraction">
+                    <i class="fas fa-minus"></i>
+                    <span>Ayirish</span>
+                </div>
+                <div class="game-mode" data-type="multiplication">
+                    <i class="fas fa-times"></i>
+                    <span>Ko'paytirish</span>
+                </div>
+                <div class="game-mode" data-type="division">
+                    <i class="fas fa-divide"></i>
+                    <span>Bo'lish</span>
+                </div>
+                <div class="game-mode" data-type="mixed">
+                    <i class="fas fa-random"></i>
+                    <span>Aralash</span>
+                </div>
+            </div>
+            <button id="mode-back-btn" class="btn"><i class="fas fa-arrow-left"></i> Orqaga</button>
+        </div>
+
+        <!-- Qiyinlik darajasini tanlash sahifasi -->
+        <div id="difficulty-screen" class="screen">
+            <h2>Qiyinlik darajasini tanlang</h2>
+            <div class="difficulty-levels">
+                <div class="difficulty-level" data-level="easy">
+                    <i class="fas fa-smile"></i>
+                    <span>Oson (1-10)</span>
+                </div>
+                <div class="difficulty-level" data-level="medium">
+                    <i class="fas fa-meh"></i>
+                    <span>O'rta (10-100)</span>
+                </div>
+                <div class="difficulty-level" data-level="hard">
+                    <i class="fas fa-frown"></i>
+                    <span>Qiyin (100-1000)</span>
+                </div>
+            </div>
+            <button id="difficulty-back-btn" class="btn"><i class="fas fa-arrow-left"></i> Orqaga</button>
+        </div>
+
+        <!-- O'yin sahifasi -->
+        <div id="game-screen" class="screen">
+            <div class="game-header">
+                <div class="timer">
+                    <i class="fas fa-clock"></i>
+                    <span id="time">60</span>s
+                </div>
+                <div class="score">
+                    <i class="fas fa-star"></i>
+                    <span id="current-score">0</span>
+                </div>
+            </div>
+            <div class="question-container">
+                <div id="question" class="question"></div>
+                <div id="options" class="options">
+                    <!-- Variantlar bu yerda ko'rsatiladi -->
+                </div>
+            </div>
+            <div class="game-footer">
+                <div id="feedback" class="feedback"></div>
+                <div class="progress-container">
+                    <div id="progress-bar" class="progress-bar"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Natija sahifasi -->
+        <div id="result-screen" class="screen">
+            <h2>Natijalar</h2>
+            <div class="result-container">
+                <div class="result-item">
+                    <span>Foydalanuvchi:</span>
+                    <span id="result-username"></span>
+                </div>
+                <div class="result-item">
+                    <span>To'g'ri javoblar:</span>
+                    <span id="result-correct"></span>
+                </div>
+                <div class="result-item">
+                    <span>Ball:</span>
+                    <span id="result-score"></span>
+                </div>
+                <div class="result-item">
+                    <span>Qiyinlik:</span>
+                    <span id="result-difficulty"></span>
+                </div>
+                <div class="result-item">
+                    <span>O'yin turi:</span>
+                    <span id="result-mode"></span>
+                </div>
+            </div>
+            <div id="confetti-container"></div>
+            <button id="play-again-btn" class="btn"><i class="fas fa-redo"></i> Qayta o'ynash</button>
+            <button id="home-btn" class="btn"><i class="fas fa-home"></i> Bosh sahifa</button>
+        </div>
+    </div>
+
+    <audio id="correct-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3"></audio>
+    <audio id="wrong-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3"></audio>
+    <audio id="game-music" loop src="https://assets.mixkit.co/music/preview/mixkit-game-show-idea-233.mp3"></audio>
+
+</body>
+<script src="./main.js"></script>
+</html>

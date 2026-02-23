@@ -3,71 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hidden Protocol | White Hacker Challenge</title>
+    <title>TERMINAL BREACH | v5.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #020617; color: #10b981; font-family: 'Courier New', Courier, monospace; }
-        .glitch { text-shadow: 0 0 10px #10b981; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-        input { background: transparent; border-bottom: 2px solid #10b981; outline: none; color: white; text-align: center; font-size: 1.5rem; }
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;700&family=Syncopate:wght@400;700&display=swap');
+
+        :root {
+            --neon: #10b981;
+            --dark-neon: #064e3b;
+            --bg: #020617;
+        }
+
+        body { 
+            background-color: var(--bg);
+            background-image: 
+                radial-gradient(circle at 50% 50%, #064e3b33 0%, transparent 80%),
+                linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
+            background-size: 100% 100%, 30px 30px, 30px 30px;
+            color: var(--neon);
+            font-family: 'Fira Code', monospace;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .syncopate { font-family: 'Syncopate', sans-serif; }
+
+        .glass-terminal {
+            background: rgba(2, 6, 23, 0.8);
+            border: 1px solid var(--neon);
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.2), inset 0 0 15px rgba(16, 185, 129, 0.1);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        /* Neon Glow Effect */
+        .neon-border {
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, var(--neon), transparent, var(--neon));
+            z-index: -1;
+            filter: blur(10px);
+            opacity: 0.3;
+        }
+
+        #timer-box {
+            font-size: 3.5rem;
+            text-shadow: 0 0 20px var(--neon);
+            letter-spacing: -2px;
+        }
+
+        input {
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid var(--dark-neon);
+            color: white;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        input:focus {
+            border-color: var(--neon);
+            background: rgba(16, 185, 129, 0.15);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+            transform: scale(1.02);
+        }
+
+        /* Failure Skull */
+        .skull-glitch {
+            font-size: 12rem;
+            color: #ff003c;
+            text-shadow: 0 0 50px #ff003c;
+            animation: tremor 0.1s infinite;
+        }
+
+        @keyframes tremor {
+            0% { transform: translate(2px, 1px); }
+            50% { transform: translate(-2px, -1px); }
+            100% { transform: translate(1px, 2px); }
+        }
+
+        .btn-green {
+            background: var(--neon);
+            color: #000;
+            box-shadow: 0 0 20px var(--neon);
+            font-weight: 900;
+            text-transform: uppercase;
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-6">
+<body class="flex items-center justify-center p-4">
 
-    <div class="max-w-2xl w-full border border-emerald-500/30 p-10 rounded-lg bg-black/50 backdrop-blur-md shadow-[0_0_50px_rgba(16,185,129,0.1)]">
-        <h1 class="text-3xl font-bold mb-6 glitch tracking-tighter text-center">TIZIMGA KIRISH: PROTOKOL 404</h1>
+    <div id="main-ui" class="w-full max-w-lg glass-terminal rounded-3xl p-10 relative">
+        <div class="neon-border"></div>
         
-        <p class="text-emerald-500/80 mb-8 text-sm leading-relaxed text-center">
-            "Haqiqiy bilim ko'rinadigan joyda emas, qidirilgan joyda bo'ladi. 
-            Ushbu tizimning kalitini topgan kishi, mehnati uchun munosib taqdirlanadi. 
-            Eslab qol: Har bir bitda ma'no bor."
-        </p>
-
-        <div class="space-y-6 flex flex-col items-center">
-            <input type="password" id="accessKey" placeholder="KALITNI KIRITING" class="w-full max-w-xs py-2">
-            
-            <button onclick="verifyAccess()" class="px-8 py-3 bg-emerald-600 hover:bg-emerald-500 text-black font-bold rounded transition-all active:scale-95">
-                TERMINALNI OCHISH
-            </button>
+        <div class="flex justify-between items-start mb-12">
+            <div class="space-y-1">
+                <p class="text-[10px] tracking-[.3em] opacity-40 uppercase">Connection Status</p>
+                <p class="text-xs font-bold text-white uppercase">Encrypted / Peer-to-Peer</p>
+            </div>
+            <div class="text-right">
+                <p class="text-[10px] tracking-[.3em] opacity-40 uppercase">Time Remaining</p>
+                <div id="timer" class="syncopate text-white font-bold text-2xl">60.0</div>
+            </div>
         </div>
 
-        <div id="result" class="mt-10 text-center hidden">
-            <div class="p-4 border border-yellow-500/50 bg-yellow-500/10 text-yellow-500 rounded">
-                <p class="font-bold">MUKOFOT KODI: <span id="rewardCode" class="underline"></span></p>
-                <p class="mt-2 text-xs text-white/70 italic">Ushbu kodni adminstratorga yuboring va pul mukofotini oling.</p>
+        <div class="text-center mb-10">
+            <h1 class="syncopate text-3xl font-black mb-2 tracking-tighter">PROTOCOL <span class="text-white">404</span></h1>
+            <div class="h-1 w-20 bg-emerald-500 mx-auto rounded-full"></div>
+        </div>
+
+        <div class="space-y-8">
+            <div class="bg-emerald-950/20 p-4 rounded-xl border border-emerald-900/40 text-[11px] leading-relaxed">
+                <span class="text-white font-bold underline">HACKER'S NOTE:</span>
+                "Tizimning asosiy rangi (Inglizcha) va sarlavhadagi raqamni toping. Sizda bir daqiqa vaqt bor. Xato qilsangiz, vaqt qisqaradi."
             </div>
+
+            <div class="relative group">
+                <input type="password" id="accessKey" placeholder="• • • • • • •" 
+                       class="w-full py-5 rounded-2xl text-center text-xl tracking-[1em] outline-none">
+            </div>
+
+            <button onclick="verifyAccess()" class="btn-green w-full py-5 rounded-2xl active:scale-95 transition-all">
+                BREACH TERMINAL
+            </button>
         </div>
     </div>
 
+    <div id="death-screen" class="fixed inset-0 bg-black hidden flex-col items-center justify-center z-50">
+        <div class="skull-glitch">☠</div>
+        <h2 class="syncopate text-4xl text-red-600 font-bold mt-4">TERMINAL SHUTDOWN</h2>
+        <p class="text-red-900 text-xs tracking-[.5em] mt-2 mb-10 uppercase">System Integrity Compromised</p>
+        <button onclick="location.reload()" class="px-12 py-3 border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-black transition-all font-bold tracking-widest uppercase text-xs">Reboot Node</button>
+    </div>
+
     <script>
-        // 2-QADAM: Console'ga xabar yuborish (Hackerlar Inspector'ni ochadi)
-        console.log("%cTo'xta! %cSiz to'g'ri yo'ldasiz.", "color: red; font-size: 20px; font-weight: bold", "color: green; font-size: 15px;");
-        console.log("Jumboqning 2-qismi: Kalit bu - 'White' so'zi va sahifadagi eng kichik raqamning yig'indisi.");
+        let timeLeft = 60;
+        const timerEl = document.getElementById('timer');
+        const mainUi = document.getElementById('main-ui');
+        const deathScreen = document.getElementById('death-screen');
 
-        // 3-QADAM: Murakkab mantiqiy tekshiruv
-        function verifyAccess() {
-            const input = document.getElementById('accessKey').value;
-            const resultDiv = document.getElementById('result');
-            const rewardSpan = document.getElementById('rewardCode');
+        const countdown = setInterval(() => {
+            timeLeft -= 0.1;
+            timerEl.innerText = timeLeft.toFixed(1);
 
-            // Haqiqiy kalit: "White404" (Base64'da yashirilgan yoki console'dagi maslahat orqali)
-            // Bu yerda kalitni oddiy ko'rinishda saqlamaymiz (Obfuscation)
-            const _0x4f2 = "V2hpdGU0MDQ="; // Bu "White404" ning Base64 ko'rinishi
-            
-            if (btoa(input) === _0x4f2) {
-                resultDiv.classList.remove('hidden');
-                rewardSpan.innerText = "HACK-SUCCESS-777-GOLD";
-                alert("Tabriklayman, White Hacker! Siz tizimni yora oldingiz.");
-            } else {
-                alert("KALIT XATO. Qayta urinib ko'ring, agar uddalay olsangiz...");
-                console.warn("Urinish muvaffaqiyatsiz. 'Inspector' elementlarini yaxshilab tekshiring.");
+            if (timeLeft <= 15) {
+                timerEl.classList.add('text-red-500', 'animate-pulse');
             }
+
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                triggerDeath();
+            }
+        }, 100);
+
+        function triggerDeath() {
+            mainUi.style.display = 'none';
+            deathScreen.style.display = 'flex';
         }
 
-        /* YASHIRIN XABAR: 
-           Agar siz buni o'qiyotgan bo'lsangiz, demak siz kodingizni yaxshi ko'rasiz.
-           Sizga maslahat: Kalit bu - Sarlavhadagi raqamni 'White' so'ziga qo'shilgani.
-        */
+        function verifyAccess() {
+            const input = document.getElementById('accessKey').value;
+            // Key: "White404"
+            if (btoa(input) === "V2hpdGU0MDQ=") {
+                clearInterval(countdown);
+                alert("TIZIM YORILDI! WHITE HACKER STATUSI TASDIQLANDI.");
+                document.body.innerHTML = `
+                    <div class="flex flex-col items-center justify-center text-center p-20">
+                        <h1 class="syncopate text-6xl font-black text-emerald-500 mb-6">SUCCESS</h1>
+                        <div class="p-8 border border-emerald-500 rounded-3xl bg-emerald-950/20">
+                            <p class="text-xs uppercase tracking-widest mb-4">Master Key Unlocked</p>
+                            <code class="text-3xl text-white">#GREEN_KNIGHT_2026</code>
+                        </div>
+                        <button onclick="location.reload()" class="mt-12 text-xs opacity-40 hover:opacity-100 underline tracking-widest">EXIT SESSION</button>
+                    </div>
+                `;
+            } else {
+                timeLeft -= 10; // Xato uchun jazo
+                mainUi.style.borderColor = "#ff003c";
+                setTimeout(() => mainUi.style.borderColor = "#10b981", 300);
+            }
+        }
     </script>
 </body>
 </html>
